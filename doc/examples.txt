@@ -1,0 +1,97 @@
+Extended Debug, based on Apache Zeta Components Debug component
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. contents:: Table of Contents
+
+Introduction
+============
+Extended Debug is a wrapper around the Apache Zeta Components Debug component, providing : 
+
+* a simple on/off switch for enabling debug logging and display
+* a simple html formatter for the output
+
+
+Usage
+=====
+Switching debug ON and OFF
+--------------------------
+We made it stupid-simple here to enabled debug-logging. Maybe too simple for your usage, but here it is. 
+From your app configuration file (i usually go for a config.php file, included from index.php), read from a configuration file whether your app should run in debug mode. 
+If so, set ezcBase's runMode to ``ezcBase::MODE_DEVELOPMENT`` and prepare the  debug logger :   
+
+:: 
+
+    /*
+     * INI configuration
+     */
+    $reader = new ezcConfigurationIniReader();
+    $reader->init( dirname( __FILE__ ), 'settings' );
+    $ini = $reader->load();
+    
+    if ( $ini->getBoolSetting( 'DevelopmentSettings', 'Debug' ) )
+    {
+        ezcBase::setRunMode( ezcBase::MODE_DEVELOPMENT );
+        $debugHandler = ezcDebug::getInstance();
+        $debugHandler->setOutputFormatter( new extendedDebugHtmlFormatter() );
+        extendedDebugLogger::setHandler( $debugHandler );
+    }
+
+
+Appending debug messages
+------------------------
+Anywhere in your code, whether development mode is enabled or not, append a message to the debug output as follows : 
+
+:: 
+
+    $status = array( 'Example', 'Debug', 'Message' );
+    extendedDebugLogger::log( var_export( $status, true ), ezcLog::DEBUG, array( "source" => __METHOD__ ) );
+
+The debug/log level can be picked amongst all available ones in the ``ezcLog`` class.
+
+
+Displaying the debug output
+---------------------------
+Generating the debug output can be done as follows : 
+
+::
+
+    debugLogger::generateOutput();
+
+If you are using the MVCTools component, an option is to embed this line in the ``runResultFilters`` method. Example : 
+
+::  
+
+    function runResultFilters( ezcMvcRoutingInformation $routeInfo, ezcMvcRequest $request, ezcMvcResult $result )
+    {
+        ...
+        $result->variables['debugOutput'] = debugLogger::generateOutput();
+        ...
+    }
+
+Which results in making the 'debugOutput' variable available from your templating layer. Using the Template component, here is an example code snippet to be placed in your main template : 
+
+:: 
+ 
+    {use $debugOutput = null}
+    ...
+    {if $debugOutput}
+        {raw $debugOutput}
+    {/if}
+
+
+Further resources
+=================
+ * High-quality, loosely coupled PHP libraries : `Apache Zeta Components`_
+ * Apache Zeta Components `Debug component`_ 
+ * Apache Zeta Components `MVC component`_ 
+ * Apache Zeta Components `Template component`_ 
+ * Advanced debugging, profiling and more professional PHP development tools : `Xdebug`_
+ * `PHP`_ 
+
+.. _`Xdebug`: http://xdebug.org/
+.. _`PHP`: http://www.php.net/
+.. _`Apache Zeta Components`: http://incubator.apache.org/zetacomponents/
+.. _`Debug component`: http://incubator.apache.org/zetacomponents/documentation/trunk/Debug/tutorial.html
+.. _`MVC component`: http://incubator.apache.org/zetacomponents/documentation/trunk/MvcTools/tutorial.html
+.. _`Template component`: http://incubator.apache.org/zetacomponents/documentation/trunk/Template/tutorial.html
+
