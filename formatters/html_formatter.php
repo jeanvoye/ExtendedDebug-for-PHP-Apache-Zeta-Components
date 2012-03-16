@@ -6,7 +6,7 @@
  * @see ezcDebugHtmlFormatter
  */
 
-class extendedDebugHtmlFormatter extends ezcDebugHtmlFormatter
+class extendeddebugHtmlFormatter extends ezcDebugHtmlFormatter
 {
     /**
      * Returns a string containing the HTML formatted output based on $writerData.

@@ -32,8 +32,8 @@ If so, set ezcBase's runMode to ``ezcBase::MODE_DEVELOPMENT`` and prepare the  d
     {
         ezcBase::setRunMode( ezcBase::MODE_DEVELOPMENT );
         $debugHandler = ezcDebug::getInstance();
-        $debugHandler->setOutputFormatter( new extendedDebugHtmlFormatter() );
-        extendedDebugLogger::setHandler( $debugHandler );
+        $debugHandler->setOutputFormatter( new extendeddebugHtmlFormatter() );
+        extendeddebugLogger::setHandler( $debugHandler );
     }
 
 
@@ -44,7 +44,7 @@ Anywhere in your code, whether development mode is enabled or not, append a mess
 :: 
 
     $status = array( 'Example', 'Debug', 'Message' );
-    extendedDebugLogger::log( var_export( $status, true ), ezcLog::DEBUG, array( "source" => __METHOD__ ) );
+    extendeddebugLogger::log( var_export( $status, true ), ezcLog::DEBUG, array( "source" => __METHOD__ ) );
 
 The debug/log level can be picked amongst all available ones in the ``ezcLog`` class.
 

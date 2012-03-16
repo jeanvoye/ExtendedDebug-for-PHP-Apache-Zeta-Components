@@ -21,7 +21,7 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @version //autogentag//
  * @filesource
- * @package Configuration
+ * @package Extended Debug
  * @subpackage Tests
  */
 
@@ -29,7 +29,7 @@
  * @package Extended Debug
  * @subpackage Tests
  */
-class extendedDebugDummyTest extends ezcTestCase
+class extendeddebugDummyTest extends ezcTestCase
 {
     public function testDummy()
     {
@@ -38,7 +38,7 @@ class extendedDebugDummyTest extends ezcTestCase
 
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite( "extendedDebugDummyTest" );
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 }
 

@@ -15,7 +15,7 @@
  * but debug will be actually written only when the development mode
  * is enabled in ezcBase.
  */
-class extendedDebugLogger
+class extendeddebugLogger
 {
     /**
      * Decorated debug handler.

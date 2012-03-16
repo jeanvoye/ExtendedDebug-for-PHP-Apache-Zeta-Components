@@ -21,7 +21,7 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @version //autogentag//
  * @filesource
- * @package Configuration
+ * @package Extended Debug
  * @subpackage Tests
  */
 
@@ -30,24 +30,25 @@
  */
 require_once 'extended_debug_dummy_test.php';
 
+ezcBase::addClassRepository( dirname( __FILE__ ) . '/../', null, 'extendeddebug' );
 
 /**
  * @package ExtendedDebug
  * @subpackage Tests
  */
-class extendedDebugSuite extends PHPUnit_Framework_TestSuite
+class extendeddebugSuite extends PHPUnit_Framework_TestSuite
 {
     public function __construct()
     {
         parent::__construct();
         $this->setName( "ExtendedDebug" );
 
-        $this->addTest( extendedDebugDummyTest::suite() );
+        $this->addTest( extendeddebugDummyTest::suite() );
     }
 
     public static function suite()
     {
-        return new extendedDebugSuite();
+        return new extendeddebugSuite();
     }
 }
 
